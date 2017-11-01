@@ -1,0 +1,25 @@
+apply plugin: 'java'
+apply plugin: 'idea'
+apply plugin: 'maven-publish'
+
+group = 'org.sitmun'
+version = '1.0.0-SNAPSHOT'
+
+repositories {
+    mavenLocal()
+    mavenCentral()
+}
+
+dependencies {
+    compile 'org.sitmun:sitmun-pof-plugin-core:1.0.0-SNAPSHOT'
+}
+
+publishing {
+    publications {
+        mavenJava(MavenPublication) {
+            from components.java
+        }
+    }
+}
+
+task install(dependsOn: 'publishToMavenLocal')
