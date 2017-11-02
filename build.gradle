@@ -1,3 +1,7 @@
+plugins {
+    id 'org.springframework.boot' version '1.5.8.RELEASE'
+}
+
 apply plugin: 'java'
 apply plugin: 'idea'
 apply plugin: 'maven-publish'
@@ -12,6 +16,8 @@ repositories {
 
 dependencies {
     compile 'org.sitmun:sitmun-pof-plugin-core:1.0.0-SNAPSHOT'
+    testCompile 'org.springframework.boot:spring-boot-starter-test'
+    testCompile 'org.springframework.boot:spring-boot-starter-tomcat'
 }
 
 publishing {

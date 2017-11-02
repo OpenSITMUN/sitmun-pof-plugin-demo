@@ -4,6 +4,8 @@ public class Greetings {
 
     private String message;
 
+    public Greetings() {}
+
     public Greetings(String message) {
         this.message = message;
     }
@@ -11,5 +13,4 @@ public class Greetings {
     public String getMessage() {
         return message;
     }
-
 }
