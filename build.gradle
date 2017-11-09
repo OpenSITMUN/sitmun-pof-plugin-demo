@@ -27,6 +27,7 @@ publishing {
             groupId 'org.sitmun'
             artifactId 'sitmun-pof-plugin-demo'
             version '1.0.0-SNAPSHOT'
+
             from components.java
         }
     }
