@@ -1,9 +1,16 @@
 lang: java
 
-env:
-  global:
-  - PLUGIN_DIR=$(mktemp -d)
+before_install: ./build-scripts/install-dependencies.sh
 
-before_install: ./build-scripts/install.sh
+script:
+ - ./gradlew assemble
+ - ./gradlew check
 
-script: ./build-scripts/script.sh
+before_cache:
+  - rm -f  $HOME/.gradle/caches/modules-2/modules-2.lock
+  - rm -fr $HOME/.gradle/caches/*/plugin-resolution/
+
+cache:
+  directories:
+    - $HOME/.gradle/caches/
+    - $HOME/.gradle/wrapper/
