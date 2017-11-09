@@ -4,8 +4,6 @@ env:
   global:
   - PLUGIN_DIR=$(mktemp -d)
 
-before_install: ./build-scripts/install-travis.sh
+before_install: ./build-scripts/install.sh
 
-script:
-  - gradle assemble
-  - gradle check
+script: ./build-scripts/script.sh

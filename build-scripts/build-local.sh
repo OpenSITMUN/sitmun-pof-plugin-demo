@@ -25,6 +25,6 @@ DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 # Using source makes all of them run in the same shell process
 # so they can share functions and variables
 
-source $DIR/install-local.sh
-source $DIR/script-local.sh
+source $DIR/install.sh
+source $DIR/script.sh
 source $DIR/after_script-local.sh
