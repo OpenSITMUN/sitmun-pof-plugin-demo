@@ -1,6 +1,7 @@
 #!/bin/bash
+cd $TRAVIS_BUILD_DIR
 
-$TRAVIS_BUILD_DIR/gradlew assemble
+./gradlew assemble
 
 #gradlew clean bootRun no termina (lanza un servidor)
-$TRAVIS_BUILD_DIR/gradlew check # Necesitamos que termine para probar
+./gradlew check # Necesitamos que termine para probar

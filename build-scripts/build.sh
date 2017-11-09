@@ -12,8 +12,7 @@
 # A SET OF COMMON VARIABLES COULD BE USEFUL.
 
 export TRAVIS_BUILD_DIR=${PWD}
-export PLUGIN1DIR=$(mktemp -d)
-
+export PLUGIN_DIR=$(mktemp -d)
 
 ################################################
 

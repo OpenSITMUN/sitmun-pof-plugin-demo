@@ -9,6 +9,10 @@ apply plugin: 'maven-publish'
 group = 'org.sitmun'
 version = '1.0.0-SNAPSHOT'
 
+bootRepackage {
+    enabled = false
+}
+
 repositories {
     mavenLocal()
     mavenCentral()
