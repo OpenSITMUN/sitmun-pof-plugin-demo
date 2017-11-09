@@ -6,4 +6,8 @@ env:
 
 before_install: ./build-scripts/install.sh
 
+script:
+  - gradle assemble
+  - gradle check
+
 after_script: ./build-scripts/after_script.sh
