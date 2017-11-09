@@ -1,10 +1,10 @@
+lang: java
+
 env:
   global:
   - PLUGIN_DIR=$(mktemp -d)
 
-install: ./build-scripts/install.sh
-
-script: ./build-scripts/script.sh
+before_install: ./build-scripts/install.sh
 
 # Caching should speed up builds
 before_cache:
