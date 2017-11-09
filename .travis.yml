@@ -1,0 +1,20 @@
+env:
+  global:
+  - PLUGIN1DIR=$(mktemp -d)
+
+install: ./build-scripts/install.sh
+
+script: ./build-scripts/script.sh
+
+# Caching should speed up builds
+before_cache:
+  - rm -f  $HOME/.gradle/caches/modules-2/modules-2.lock
+  - rm -fr $HOME/.gradle/caches/*/plugin-resolution/
+
+cache:
+  directories:
+    - $HOME/.gradle/caches/
+    - $HOME/.gradle/wrapper/
+    - $HOME/.m2
+
+after_script: ./build-scripts/after_script.sh
