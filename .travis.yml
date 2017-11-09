@@ -1,6 +1,6 @@
 env:
   global:
-  - PLUGIN_DIR=/$(mktemp -d)
+  - PLUGIN_DIR=$(mktemp -d)
 
 install: ./build-scripts/install.sh
 
