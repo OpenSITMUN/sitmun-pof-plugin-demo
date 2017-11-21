@@ -1,8 +1,6 @@
 before_install: ./build-scripts/install-dependencies.sh
 
-script:
- - ./gradlew assemble
- - ./gradlew check
+script: ./build-scripts/script.sh
 
 before_cache:
   - rm -f  $HOME/.gradle/caches/modules-2/modules-2.lock
