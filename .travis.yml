@@ -1,5 +1,3 @@
-lang: java
-
 before_install: ./build-scripts/install-dependencies.sh
 
 script:
