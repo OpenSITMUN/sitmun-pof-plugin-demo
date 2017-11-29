@@ -1,5 +1,6 @@
 plugins {
     id 'org.springframework.boot' version '1.5.8.RELEASE'
+    id 'org.sonarqube' version '2.6'
 }
 
 apply plugin: 'java'
@@ -31,6 +32,14 @@ publishing {
             from components.java
         }
     }
+}
+
+sonarqube {
+    properties {
+        property 'sonar.host.url', 'https://sonarcloud.io'
+        property 'sonar.organization', 'opensitmun'     
+        property 'sonar.sources', 'src/main'
+    }    
 }
 
 task install(dependsOn: 'publishToMavenLocal')

@@ -7,6 +7,12 @@ echo
 echo "Install dependencies script ..."
 echo
 
-git clone https://github.com/OpenSITMUN/sitmun-pof-plugin-core.git $PLUGIN_DIR/sitmun-pof-plugin-core
-cd $PLUGIN_DIR/sitmun-pof-plugin-core
-./gradlew clean install
+if git clone https://github.com/OpenSITMUN/sitmun-pof-plugin-core.git $PLUGIN_DIR/sitmun-pof-plugin-core; then
+    cd $PLUGIN_DIR/sitmun-pof-plugin-core
+    ./gradlew clean install
+else
+    echo
+    echo "Install dependencies script FAILED"
+    echo
+    return 1
+fi
