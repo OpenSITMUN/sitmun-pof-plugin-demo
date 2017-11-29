@@ -13,4 +13,4 @@ public class Greetings {
     public String getMessage() {
         return message;
     }
-}
+
