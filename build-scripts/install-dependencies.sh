@@ -14,5 +14,5 @@ else
     echo
     echo "Install dependencies script FAILED"
     echo
-    return 1
+    exit 1
 fi
