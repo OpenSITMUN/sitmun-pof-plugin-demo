@@ -13,4 +13,8 @@ public class Greetings {
     public String getMessage() {
         return message;
     }
-
+    
+    public String getMessage2() {
+        return message;
+    }
+}
