@@ -1,9 +1,6 @@
-#addons:
-#  sonarcloud:
-#    organization: opensitmun
-#token:
-#secure: RELLENAR
-    
+addons:
+  sonarcloud:
+    organization: opensitmun
 
 before_install: ./build-scripts/install-dependencies.sh
 
