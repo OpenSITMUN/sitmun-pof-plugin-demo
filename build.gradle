@@ -17,7 +17,7 @@ repositories {
 }
 
 dependencies {
-    compile 'org.sitmun:sitmun-pof-plugin-core:1.0.0-SNAPSHOT'
+    compile 'org.sitmun:sitmun-plugin-core:1.0.0-SNAPSHOT'
     testCompile 'org.springframework.boot:spring-boot-starter-test'
     testCompile 'org.springframework.boot:spring-boot-starter-tomcat'
 }
@@ -26,7 +26,7 @@ publishing {
     publications {
         mavenJava(MavenPublication) {
             groupId 'org.sitmun'
-            artifactId 'sitmun-pof-plugin-demo'
+            artifactId 'sitmun-plugin-demo'
             version '1.0.0-SNAPSHOT'
 
             from components.java
@@ -37,7 +37,7 @@ publishing {
 sonarqube {
     properties {
         property 'sonar.host.url', 'https://sonarcloud.io'
-        property 'sonar.organization', 'opensitmun'     
+        property 'sonar.organization', 'sitmun'     
         property 'sonar.sources', 'src/main'
     }    
 }

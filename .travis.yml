@@ -1,6 +1,6 @@
 addons:
   sonarcloud:
-    organization: opensitmun
+    organization: sitmun
 
 before_install: ./build-scripts/install-dependencies.sh
 
