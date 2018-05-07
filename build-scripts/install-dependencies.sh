@@ -7,7 +7,10 @@ echo
 echo "Install dependencies script ..."
 echo
 
-if ./gradlew cloneDependencyRepos; then    
+if ./gradlew cloneDependencyRepos; then
+    echo
+    echo "Repos cloned. Now clean+install them ..."
+    echo
     for D in $PLUGIN_DIR/*/; do ${D}gradlew clean install; done
 else
     echo
