@@ -9,9 +9,9 @@ echo
 
 if ./gradlew cloneDependencyRepos; then
     echo
-    echo "Repos cloned. Now clean+install them ..."
+    echo "Repos cloned ..."
     echo
-    for D in $PLUGIN_DIR/*/; do ${D}gradlew clean install; done
+    for D in $PLUGIN_DIR/*/; do echo "Clean install: "; echo ${D}; ${D}gradlew clean install; done
 else
     echo
     echo "Install dependencies script FAILED"
