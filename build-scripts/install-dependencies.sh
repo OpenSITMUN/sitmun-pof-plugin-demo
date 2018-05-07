@@ -11,7 +11,7 @@ if ./gradlew cloneDependencyRepos; then
     echo
     echo "Repos cloned ..."
     echo
-    for D in $PLUGIN_DIR/*/; do echo "Clean install: "; echo ${D}; ${D}gradlew clean install --stacktrace; done
+    for D in $PLUGIN_DIR/*/; do echo "Clean install: "; echo ${D}; cd ${D}; ./gradlew clean install --stacktrace; done
 else
     echo
     echo "Install dependencies script FAILED"
