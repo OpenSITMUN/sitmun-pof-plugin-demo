@@ -1,15 +1,14 @@
 #!/bin/bash
 if [ -z $PLUGIN_DIR ]; then
-    PLUGIN_DIR=$(mktemp -d)
+    export PLUGIN_DIR=$(mktemp -d)
 fi
 
 echo
 echo "Install dependencies script ..."
 echo
 
-if git clone https://github.com/sitmun/sitmun-plugin-core.git $PLUGIN_DIR/sitmun-plugin-core; then
-    cd $PLUGIN_DIR/sitmun-plugin-core
-    ./gradlew clean install
+if ./gradlew cloneDependencyRepos; then    
+    for D in $PLUGIN_DIR/*/; do ${D}gradlew clean install; done
 else
     echo
     echo "Install dependencies script FAILED"

@@ -1,6 +1,7 @@
 plugins {
     id 'org.springframework.boot' version '1.5.8.RELEASE'
     id 'org.sonarqube' version '2.6'
+    id 'org.ajoberstar.grgit' version '2.2.0'
 }
 
 apply plugin: 'java'
@@ -17,11 +18,23 @@ bootRepackage {
 
 repositories {
     mavenLocal()
-    mavenCentral()
+    mavenCentral()    
 }
 
-dependencies {
-    compile 'org.sitmun:sitmun-plugin-core:0.1.0-SNAPSHOT'
+// Dependencies to other SITMUN plugins must declared all here to facilitate using them
+// in different places of this script
+ext {    
+    sitmunlibs = [:]
+    sitmunlibs.sitmuncore = [
+        gitrepo : 'https://github.com/sitmun/sitmun-plugin-core.git',
+        groupId : 'org.sitmun',
+        artifactId : 'sitmun-plugin-core',
+        version : '0.1.0-SNAPSHOT'
+    ]
+}
+
+dependencies {    
+    sitmunlibs.each { k,v -> compile "${v.groupId}:${v.artifactId}:${v.version}" }
     testCompile 'org.springframework.boot:spring-boot-starter-test'
     testCompile 'org.springframework.boot:spring-boot-starter-tomcat'
 }
@@ -46,3 +59,16 @@ sonarqube {
 }
 
 task install(dependsOn: 'publishToMavenLocal')
+
+// This custom task clones the git repositoris of all sitmun dependencies defined in sitmunlibs
+// It requires that a PLUGIN_DIR environment variable exists and has been exported. It will
+// fail with an exception if it does not find one
+task cloneDependencyRepos {
+  doLast {
+    def plugindir = System.getenv('PLUGIN_DIR')
+    if (plugindir == null) { throw new Exception("${plugindir} is not a valid directory for the git cloning. You must define and export a PLUGIN_DIR environment variable.") }
+    sitmunlibs.each { k, v ->            
+        grgit.clone(dir: "${plugindir}/${v.artifactId}", uri: "${v.gitrepo}", refToCheckout: "${v.version}")
+    }        
+  }
+}
