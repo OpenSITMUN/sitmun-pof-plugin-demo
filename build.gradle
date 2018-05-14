@@ -34,9 +34,9 @@ ext {
 }
 
 dependencies {    
-    sitmunlibs.each { k,v -> compile "${v.groupId}:${v.artifactId}:${v.version}" }
-    testCompile 'org.springframework.boot:spring-boot-starter-test'
-    testCompile 'org.springframework.boot:spring-boot-starter-tomcat'
+    sitmunlibs.each { k,v -> implementation "${v.groupId}:${v.artifactId}:${v.version}" }
+    testImplementation 'org.springframework.boot:spring-boot-starter-test'
+    testImplementation 'org.springframework.boot:spring-boot-starter-tomcat'
 }
 
 publishing {
