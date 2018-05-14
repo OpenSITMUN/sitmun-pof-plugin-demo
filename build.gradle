@@ -60,7 +60,7 @@ sonarqube {
 
 task install(dependsOn: 'publishToMavenLocal')
 
-// This custom task clones the git repositoris of all sitmun dependencies defined in sitmunlibs
+// This custom task clones the git repositories of all sitmun dependencies defined in sitmunlibs
 // It requires that a PLUGIN_DIR environment variable exists and has been exported. It will
 // fail with an exception if it does not find one
 task cloneDependencyRepos {
