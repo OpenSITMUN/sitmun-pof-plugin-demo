@@ -69,13 +69,15 @@ task cloneDependencyRepos() {
     }
 }
 
-task installDependencyRepos(type: GradleBuild, dependsOn: 'cloneDependencyRepos') {    
-    description = 'Install dependency repos, cleans and installs the git repositories declared in sitmunlibs in a temporary directory. Depends on cloneDependencyRepos.'    
-    sitmunlibs.each { k,v -> 
-        buildFile = file("${cloneDependencyRepos.plugindir}/${v.artifactId}/build.gradle")            
-        tasks = ['clean', 'install']       
-    }
-    doLast {
+task installDependencyRepos(dependsOn: 'cloneDependencyRepos') {    
+    description = 'Install dependency repos, cleans and installs the git repositories declared in sitmunlibs in a temporary directory. Depends on cloneDependencyRepos.'        
+    doLast {        
+        sitmunlibs.each { k,v -> 
+            def tempTask = tasks.create(name: "install_${v.artifactId}", type: GradleBuild)
+            tempTask.buildFile = file("${cloneDependencyRepos.plugindir}/${v.artifactId}/build.gradle")            
+            tempTask.tasks = ['clean', 'install']       
+            tempTask.execute()
+        }
         // Delete temporary directory
         delete cloneDependencyRepos.plugindir
     }
