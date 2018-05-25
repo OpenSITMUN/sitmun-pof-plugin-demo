@@ -31,8 +31,5 @@ if source $DIR/install-dependencies.sh; then
         source $DIR/after_script-local.sh
         exit 1
     fi
-else
-    source $DIR/after_script-local.sh
-    exit 1
 fi
-source $DIR/after_script-local.sh
+
