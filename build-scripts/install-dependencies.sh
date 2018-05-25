@@ -4,7 +4,7 @@ echo
 echo "Install dependencies script ..."
 echo
 
-if ./gradlew installDependencyRepos; then
+if ./gradlew clean install; then
     echo
     echo "Repos cloned and clean installed..."
     echo    

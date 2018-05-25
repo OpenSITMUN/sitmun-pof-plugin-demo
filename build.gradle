@@ -58,14 +58,10 @@ sonarqube {
     }
 }
 
-task install(dependsOn: 'publishToMavenLocal')
-
-
 task cloneDependencyRepos() {
     description = 'Clone the git repositories declared in sitmunlibs to a temporary directory.'        
-    doFirst {
-        ext.plugindir = File.createTempDir().toString()    
-    }
+    // Create temporary directory
+    ext.plugindir = File.createTempDir().toString()    
     doLast {        
         sitmunlibs.each { k, v ->            
             grgit.clone(dir: "${cloneDependencyRepos.plugindir}/${v.artifactId}", uri: "${v.gitrepo}", refToCheckout: "${v.version}")
@@ -75,12 +71,14 @@ task cloneDependencyRepos() {
 
 task installDependencyRepos(type: GradleBuild, dependsOn: 'cloneDependencyRepos') {    
     description = 'Install dependency repos, cleans and installs the git repositories declared in sitmunlibs in a temporary directory. Depends on cloneDependencyRepos.'    
+    sitmunlibs.each { k,v -> 
+        buildFile = file("${cloneDependencyRepos.plugindir}/${v.artifactId}/build.gradle")            
+        tasks = ['clean', 'install']       
+    }
     doLast {
-        sitmunlibs.each { k,v -> 
-            buildFile = file("${cloneDependencyRepos.plugindir}/${v.artifactId}/build.gradle")
-            tasks = ['installDependencyRepos', 'clean', 'install']       
-        }
         // Delete temporary directory
         delete cloneDependencyRepos.plugindir
     }
 }
+
+task install(dependsOn: ['publishToMavenLocal', 'installDependencyRepos'])
