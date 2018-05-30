@@ -80,8 +80,12 @@ task installDependencyRepos(dependsOn: 'cloneDependencyRepos') {
             tempTask.tasks = ['clean', 'install']       
             tempTask.execute()
         }
-        // Delete temporary directory
-        delete cloneDependencyRepos.plugindir
+        // Delete temporary directory        
+        try {
+            delete cloneDependencyRepos.plugindir
+        } catch (Exception e) {
+            println("Temp directory ${cloneDependencyRepos.plugindir} was not deleted. You can safely delete it afterwards.")
+        }
     }
 }
 
