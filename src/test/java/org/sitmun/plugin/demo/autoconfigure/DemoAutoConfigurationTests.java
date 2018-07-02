@@ -25,7 +25,7 @@ public class DemoAutoConfigurationTests {
     }
 
     @Test
-    public void registersDemoControllerAutomatically() {
+    public void registerDemoController() {
         context.register(DemoAutoConfiguration.class);
         context.refresh();
         assertThat(context.getBean(DemoController.class)).isNotNull();

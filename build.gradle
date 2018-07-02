@@ -35,8 +35,9 @@ ext {
 
 dependencies {    
     sitmunlibs.each { k,v -> implementation "${v.groupId}:${v.artifactId}:${v.version}" }
+
+    testImplementation 'com.h2database:h2'
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
-    testImplementation 'org.springframework.boot:spring-boot-starter-tomcat'
 }
 
 publishing {
