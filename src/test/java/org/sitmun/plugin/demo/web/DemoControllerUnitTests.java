@@ -13,20 +13,20 @@ import static org.assertj.core.api.Assertions.assertThat;
 @SpringBootTest
 public class DemoControllerUnitTests {
 
-    private static final String EXPECTED_MESSAGE = "Hello {0}!";
+  private static final String EXPECTED_MESSAGE = "Hello {0}!";
 
-    @Autowired
-    private DemoController controller;
+  @Autowired
+  private DemoController controller;
 
-    @Test
-    public void contextLoads() {
-        assertThat(controller).isNotNull();
-    }
+  @Test
+  public void contextLoads() {
+    assertThat(controller).isNotNull();
+  }
 
-    @Test
-    public void helloResponseContainsName() {
-        assertThat(controller.hello("me"))
-                .extracting("message")
-                .containsOnly(format(EXPECTED_MESSAGE, "me"));
-    }
+  @Test
+  public void helloResponseContainsName() {
+    assertThat(controller.hello("me"))
+      .extracting("message")
+      .containsOnly(format(EXPECTED_MESSAGE, "me"));
+  }
 }

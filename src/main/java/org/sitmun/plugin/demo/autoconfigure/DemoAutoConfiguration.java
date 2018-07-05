@@ -7,8 +7,8 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 public class DemoAutoConfiguration {
 
-    @Bean
-    public DemoController demoController() {
-        return new DemoController();
-    }
+  @Bean
+  public DemoController demoController() {
+    return new DemoController();
+  }
 }

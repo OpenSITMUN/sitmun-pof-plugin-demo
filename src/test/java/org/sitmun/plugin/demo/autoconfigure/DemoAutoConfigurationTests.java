@@ -10,24 +10,24 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 public class DemoAutoConfigurationTests {
 
-    private AnnotationConfigApplicationContext context;
+  private AnnotationConfigApplicationContext context;
 
-    @Before
-    public void setUp() {
-        context = new AnnotationConfigApplicationContext();
-    }
+  @Before
+  public void setUp() {
+    context = new AnnotationConfigApplicationContext();
+  }
 
-    @After
-    public void tearDown() {
-        if (context != null) {
-            context.close();
-        }
+  @After
+  public void tearDown() {
+    if (context != null) {
+      context.close();
     }
+  }
 
-    @Test
-    public void registerDemoController() {
-        context.register(DemoAutoConfiguration.class);
-        context.refresh();
-        assertThat(context.getBean(DemoController.class)).isNotNull();
-    }
+  @Test
+  public void registerDemoController() {
+    context.register(DemoAutoConfiguration.class);
+    context.refresh();
+    assertThat(context.getBean(DemoController.class)).isNotNull();
+  }
 }

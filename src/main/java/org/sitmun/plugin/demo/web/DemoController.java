@@ -11,9 +11,9 @@ import java.text.MessageFormat;
 @Controller
 @RequestMapping("api/demo")
 public class DemoController {
-    @ResponseBody
-    @RequestMapping(value = "hello")
-    public Greetings hello(@RequestParam String name) {
-        return new Greetings(MessageFormat.format("Hello {0}!", name));
-    }
+  @ResponseBody
+  @RequestMapping(value = "hello")
+  public Greetings hello(@RequestParam String name) {
+    return new Greetings(MessageFormat.format("Hello {0}!", name));
+  }
 }

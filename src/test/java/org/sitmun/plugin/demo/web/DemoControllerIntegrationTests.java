@@ -18,20 +18,20 @@ import static org.assertj.core.api.Assertions.assertThat;
 @SpringBootTest(webEnvironment = WebEnvironment.RANDOM_PORT)
 public class DemoControllerIntegrationTests {
 
-    private static final String EXPECTED_MESSAGE = "Hello {0}!";
-    private static final String HELLO_ENDPOINT = "http://localhost:{port}/api/demo/hello?name={msg}";
+  private static final String EXPECTED_MESSAGE = "Hello {0}!";
+  private static final String HELLO_ENDPOINT = "http://localhost:{port}/api/demo/hello?name={msg}";
 
-    @LocalServerPort
-    private int port;
+  @LocalServerPort
+  private int port;
 
-    @Autowired
-    private TestRestTemplate restTemplate;
+  @Autowired
+  private TestRestTemplate restTemplate;
 
-    @Test
-    public void helloMe() {
-        UriTemplate uri = new UriTemplate(HELLO_ENDPOINT);
-        assertThat(this.restTemplate.getForObject(uri.expand(port, "me"), Greetings.class))
-                .extracting("message")
-                .containsOnly(format(EXPECTED_MESSAGE, "me"));
-    }
+  @Test
+  public void helloMe() {
+    UriTemplate uri = new UriTemplate(HELLO_ENDPOINT);
+    assertThat(this.restTemplate.getForObject(uri.expand(port, "me"), Greetings.class))
+      .extracting("message")
+      .containsOnly(format(EXPECTED_MESSAGE, "me"));
+  }
 }
