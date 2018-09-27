@@ -10,7 +10,7 @@ apply plugin: 'maven-publish'
 apply plugin: 'jacoco'
 
 group = 'org.sitmun'
-version = '0.1.0-SNAPSHOT'
+version = '0.4.0-SNAPSHOT'
 
 bootRepackage {
     enabled = false
@@ -29,7 +29,7 @@ ext {
         gitrepo : 'https://github.com/sitmun/sitmun-plugin-core.git',
         groupId : 'org.sitmun',
         artifactId : 'sitmun-plugin-core',
-        version : '0.1.0-SNAPSHOT'
+        version : '0.4.0-SNAPSHOT'
     ]
 }
 
