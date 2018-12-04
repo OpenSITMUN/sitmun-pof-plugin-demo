@@ -4,3 +4,15 @@
 # SITMUN plugin Demo
 
 A simple demo of the plugin system.
+
+## Requirements
+* Java 8 release
+* Node 8.x (LTS) or greater LTS release
+
+## Dependencies
+This project depends on these plugins (already considered in the build script):
+
+- [sitmun-plugin-core](https://github.com/sitmun/sitmun-plugin-core)
+
+## Domain model
+The domain model is defined in PlantUML language here: https://github.com/sitmun/community/wiki/Conceptual-Model

@@ -2,7 +2,7 @@ addons:
   sonarcloud:
     organization: sitmun
 
-before_install: ./build-scripts/install-dependencies.sh
+#before_install: ./build-scripts/install-dependencies.sh
 
 script: ./build-scripts/script.sh
 
@@ -16,6 +16,10 @@ cache:
   directories:
     - $HOME/.gradle/caches/
     - $HOME/.gradle/wrapper/
+    - $HOME/.sonar/cache
+    - $HOME/.m2/repository
+    - .gradle
+    - node_modules
 
 # Safelist
 branches:

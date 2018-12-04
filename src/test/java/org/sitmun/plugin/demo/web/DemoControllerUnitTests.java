@@ -6,14 +6,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
-import static java.text.MessageFormat.format;
 import static org.assertj.core.api.Assertions.assertThat;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
 public class DemoControllerUnitTests {
 
-  private static final String EXPECTED_MESSAGE = "Hello {0}!";
+  private static final String REQUIREJS_CONFIG_KEY = "requirejs.config";
 
   @Autowired
   private DemoController controller;
@@ -24,9 +23,7 @@ public class DemoControllerUnitTests {
   }
 
   @Test
-  public void helloResponseContainsName() {
-    assertThat(controller.hello("me"))
-      .extracting("message")
-      .containsOnly(format(EXPECTED_MESSAGE, "me"));
+  public void requirejsIsPresentInWebJars() {
+    assertThat(controller.webjarjs()).contains(REQUIREJS_CONFIG_KEY);
   }
 }
