@@ -38,10 +38,10 @@ bootRepackage {
 ext {    
     sitmunlibs = [:]
     sitmunlibs.sitmuncore = [
-        gitrepo : 'https://github.com/sitmun/sitmun-plugin-core.git',
-        groupId : 'org.sitmun',
-        artifactId : 'sitmun-plugin-core',
-        version : 'master'
+      gitrepo   : 'https://github.com/sitmun/sitmun-plugin-core.git',
+      groupId   : 'org.sitmun',
+      artifactId: 'sitmun-plugin-core',
+      version   : 'master'
     ]
 }
 
