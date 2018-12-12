@@ -5,7 +5,7 @@
     "ng": "ng",
     "start": "( [ ! -d './src/main/angular-library/src/assets/geoadmin-module-lib' ] && mkdir ./src/main/angular-library/src/assets/geoadmin-module-lib || : ) && ( cp -R ./src/main/angular-library/projects/sitmun-plugin-demo/src/lib/geoadmin-module/geoadmin-module-lib/* ./src/main/angular-library/src/assets/geoadmin-module-lib ) && ng serve",
     "build": "( [ ! -d './src/main/angular-library/src/assets/geoadmin-module-lib' ] && mkdir ./src/main/angular-library/src/assets/geoadmin-module-lib || : ) && ( cp -R ./src/main/angular-library/projects/sitmun-plugin-demo/src/lib/geoadmin-module/geoadmin-module-lib/* ./src/main/angular-library/src/assets/geoadmin-module-lib ) && ng build",
-    "build-sitmun-plugin-demo": "ng build sitmun-plugin-demo && ( [ ! -d './dist/sitmun-plugin-demo/geoadmin-module-lib' ] && mkdir ./dist/sitmun-plugin-demo/geoadmin-module-lib || : ) && ( cp -R ./src/main/angular-library/projects/sitmun-plugin-demo/src/lib/geoadmin-module/geoadmin-module-lib/* ./dist/sitmun-plugin-demo/geoadmin-module-lib )",
+    "build-sitmun-plugin-demo": "scripty",
     "test": "( [ ! -d './src/main/angular-library/src/assets/geoadmin-module-lib' ] && mkdir ./src/main/angular-library/src/assets/geoadmin-module-lib || : ) && ( cp -R ./src/main/angular-library/projects/sitmun-plugin-demo/src/lib/geoadmin-module/geoadmin-module-lib/* ./src/main/angular-library/src/assets/geoadmin-module-lib ) && ng test",
     "lint": "( [ ! -d './src/main/angular-library/src/assets/geoadmin-module-lib' ] && mkdir ./src/main/angular-library/src/assets/geoadmin-module-lib || : ) && ( cp -R ./src/main/angular-library/projects/sitmun-plugin-demo/src/lib/geoadmin-module/geoadmin-module-lib/* ./src/main/angular-library/src/assets/geoadmin-module-lib ) && ng lint",
     "e2e": "( [ ! -d './src/main/angular-library/src/assets/geoadmin-module-lib' ] && mkdir ./src/main/angular-library/src/assets/geoadmin-module-lib || : ) && ( cp -R ./src/main/angular-library/projects/sitmun-plugin-demo/src/lib/geoadmin-module/geoadmin-module-lib/* ./src/main/angular-library/src/assets/geoadmin-module-lib ) && ng ei2e"
@@ -63,6 +63,7 @@
     "karma-jasmine-html-reporter": "^0.2.2",
     "ng-packagr": "^3.0.0-rc.2",
     "protractor": "~5.3.0",
+    "scripty": "^1.8.0",
     "ts-node": "~5.0.1",
     "tsickle": ">=0.25.5",
     "tslib": "^1.7.1",
