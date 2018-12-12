@@ -1,0 +1,7 @@
+#!/usr/bin/env bash
+
+ng build sitmun-plugin-demo;
+( [ ! -d './dist' ] && mkdir ./dist || : );
+( [ ! -d './dist/sitmun-plugin-demo' ] && mkdir ./dist/sitmun-plugin-demo || : );
+( [ ! -d './dist/sitmun-plugin-demo/geoadmin-module-lib' ] && mkdir ./dist/sitmun-plugin-demo/geoadmin-module-lib || : );
+( cp -R ./src/main/angular-library/projects/sitmun-plugin-demo/src/lib/geoadmin-module/geoadmin-module-lib/* ./dist/sitmun-plugin-demo/geoadmin-module-lib );
