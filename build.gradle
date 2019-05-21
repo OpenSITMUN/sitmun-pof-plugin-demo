@@ -85,9 +85,17 @@ publishing {
 sonarqube {
     properties {
         property 'sonar.host.url', 'https://sonarcloud.io'
-        property 'sonar.organization', 'sitmun'        
-    }
-    properties['sonar.sources'] += 'src/main/angular-library'
+        property 'sonar.organization', 'sitmun'
+        // I assume the default source folder is src/main/java because of the java plugin
+        // If that folder does not exist, adding another source (the else) does not work
+        // properly
+        if (properties['sonar.sources'] == null)
+            properties['sonar.sources'] = 'src/main/angular-library'
+        else
+            properties['sonar.sources'] += 'src/main/angular-library'
+        // Excluding some code which, at least most if it, is a library that probably should not have been included as code
+        property "sonar.exclusions", "src/main/angular-library/projects/sitmun-plugin-demo/src/lib/**/*"
+    }    
 }
 
 
