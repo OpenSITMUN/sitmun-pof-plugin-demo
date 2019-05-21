@@ -426,7 +426,7 @@ module.controller("GaTreeMapConfigurationController",
           }
           layersConfiguration[layerConfig.serverLayerName] = layerConfig;
           categoryNode = {
-            "order": node.ordee,
+            "order": node.orden,
             "category": "layer",
             "staging": "prod",
             "label": label,
@@ -444,7 +444,7 @@ module.controller("GaTreeMapConfigurationController",
         //Create a node group if it does not exist and add it to the parent children node list
         if (!categoryNodes[elementId]) {
           categoryNode = {
-            "order": node.ordee,
+            "order": node.orden,
             "category": "topic",
             "staging": "prod",
             "selectedOpen": node.active,
