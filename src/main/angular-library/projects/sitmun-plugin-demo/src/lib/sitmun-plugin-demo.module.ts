@@ -4,7 +4,7 @@ import { NgModule, ModuleWithProviders } from '@angular/core';
 import { UpgradeModule, setAngularJSGlobal } from '@angular/upgrade/static';
 
 import {SitmunPluginCoreModule,LoginComponent,AccountEditComponent,AccountChangePasswordComponent,
-        MapConfigurationManagerService, 
+        MapConfigurationManagerService,
         Layer, LayerConfiguration, LayerGroup} from 'sitmun-plugin-core';
 
 import * as angular from 'angular';
@@ -17,7 +17,7 @@ import {TreeComponentFacade} from './tree/tree.component';
 
 @NgModule({
 	imports: [
-		SitmunPluginCoreModule.forRoot(),
+		SitmunPluginCoreModule,
 		//Upgrade module import for angularjs modules
 		UpgradeModule
 	],
