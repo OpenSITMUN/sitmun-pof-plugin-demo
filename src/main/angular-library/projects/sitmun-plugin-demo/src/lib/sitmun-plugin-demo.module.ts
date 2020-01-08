@@ -3,9 +3,11 @@ import { NgModule, ModuleWithProviders } from '@angular/core';
 //Hybrid app imports
 import { UpgradeModule, setAngularJSGlobal } from '@angular/upgrade/static';
 
-import {SitmunPluginCoreModule,LoginComponent,AccountEditComponent,AccountChangePasswordComponent,
-        MapConfigurationManagerService,
-        Layer, LayerConfiguration, LayerGroup} from 'sitmun-plugin-core';
+import {SitmunPluginCoreModule,LoginComponent,AccountEditComponent,AccountChangePasswordComponent} from 'sitmun-plugin-core';
+
+import {SitmunFrontendCoreModule,
+  MapConfigurationManagerService,
+  Layer, LayerConfiguration, LayerGroup} from 'sitmun-frontend-core';
 
 import * as angular from 'angular';
 
@@ -18,6 +20,7 @@ import {TreeComponentFacade} from './tree/tree.component';
 @NgModule({
 	imports: [
 		SitmunPluginCoreModule,
+    SitmunFrontendCoreModule,
 		//Upgrade module import for angularjs modules
 		UpgradeModule
 	],

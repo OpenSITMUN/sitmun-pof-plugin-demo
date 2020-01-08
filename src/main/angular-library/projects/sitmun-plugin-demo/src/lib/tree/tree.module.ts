@@ -1,8 +1,11 @@
 import {downgradeComponent, downgradeInjectable} from '@angular/upgrade/static';
 import angular from 'angular';
 
-import {MapComponent, MapConfigurationManagerService, 
-        Layer, LayerConfiguration, LayerGroup, OptionalParameter, MapOptionsConfiguration} from 'sitmun-plugin-core';
+import {MapComponent} from 'sitmun-plugin-core';
+
+import {MapConfigurationManagerService,
+  Layer, LayerConfiguration, LayerGroup, OptionalParameter, MapOptionsConfiguration} from 'sitmun-frontend-core';
+
 
 //Angular js imports
 import {GEOADMIN_MODULE_NAME} from '../geoadmin-module/geoadmin-module';
@@ -19,7 +22,7 @@ var module = angular.module(GEOADMIN_MODULE_NAME);
 // and loads the trees configuration into the tree component and sends the trees, backgrounds
 // and stituation map configuration to the map component
 module.factory('mapConfigurationManagerService', downgradeInjectable(MapConfigurationManagerService));
-module.controller("GaTreeMapConfigurationController", 
+module.controller("GaTreeMapConfigurationController",
 ['$rootScope', '$scope', 'mapConfigurationManagerService', 'gaLayers', 'gaTopic', '$attrs', 'geoadminModule',
   function($rootScope, $scope, mapConfigurationManagerService, gaLayers, gaTopic, $attrs, geoadminModule){
 
@@ -32,7 +35,7 @@ module.controller("GaTreeMapConfigurationController",
     function showTreeComponent() {
       visibility = true;
     }
-    
+
     this.getVisibility = function() {
       return visibility;
     }
@@ -100,7 +103,7 @@ module.controller("GaTreeMapConfigurationController",
       }
       if (geoadminLayer.url_exception != undefined) {
         layer.url_exception = geoadminLayer.url_exception;
-      }      
+      }
       if (geoadminLayer.url_bgcolor != undefined) {
         layer.url_bgcolor = geoadminLayer.url_bgcolor;
       }
@@ -152,7 +155,7 @@ module.controller("GaTreeMapConfigurationController",
         if ((cartography.transparency != undefined) && (cartography.transparency != null)) {
             layerConfig.opacity = Math.abs(1 - cartography.transparency/100);
         }
-        layerConfig.queryable = cartography.queryable;//Currently not supported 
+        layerConfig.queryable = cartography.queryable;//Currently not supported
         //cartography.queryAct;//Currently not supported
         //cartography.queryLay;//Currently not supported
 
@@ -172,7 +175,7 @@ module.controller("GaTreeMapConfigurationController",
           } else {
             layerConfig.singleTile = true;
           }
-          layerConfig.wmsUrl = cartography.service.url;                      
+          layerConfig.wmsUrl = cartography.service.url;
           cartography.service.projections;//Currently not supported
           if (cartography.service.legend) {
             layerConfig.hasLegend = true;
@@ -180,7 +183,7 @@ module.controller("GaTreeMapConfigurationController",
           } else {
             layerConfig.hasLegend = false;
           }
-                    
+
           layerConfig.infoUrl = cartography.service.infoUrl;
           layerConfig.projections = cartography.service.projections;
           //cartography.service.connection;//Currently not supported
@@ -193,7 +196,7 @@ module.controller("GaTreeMapConfigurationController",
               if (parameter.name) {
                 parameterName = parameter.name.toLowerCase();
                 switch(parameterName) {
-                  case 'transparent': 
+                  case 'transparent':
                                       layerConfig.url_transparent = parameter.value;
                                       break;
                   case 'exception':
@@ -222,7 +225,7 @@ module.controller("GaTreeMapConfigurationController",
                                       layerConfig.tileSize = parameter.value;
                                       break;
                   case 'extent':
-                                      if ((parameter.value.indexOf("[") != -1) && 
+                                      if ((parameter.value.indexOf("[") != -1) &&
                                           (parameter.value.indexOf("]") != -1)) {
                                         layerConfig.extent = JSON.parse(parameter.value);
                                       }
@@ -274,7 +277,7 @@ module.controller("GaTreeMapConfigurationController",
         //Asign the tree node label value to be
         layerConfig.label = cartography.name;
 
-        //Define an attribution 
+        //Define an attribution
         if (!layerConfig.attribution) {
             //Get the default attribution
             layerConfig.attribution = geoadminModule.getDefaultAttribution();//"";
@@ -294,7 +297,7 @@ module.controller("GaTreeMapConfigurationController",
         layerConfig.highlightable = false;
         layerConfig.chargeable = false;
         layerConfig.searchable = false;
-        
+
         layerConfig.timeEnabled = false;
         layerConfig.tooltip = true; //Tooltip enabled (geoadmin tree module configuration attribute)
         layerConfig.topics = topics;//Topic id array that this layer is related to (geoadmin tree module configuration attribute)
@@ -321,7 +324,7 @@ module.controller("GaTreeMapConfigurationController",
         layerConfig.metadataUrl = cartography.metadataUrl;
         //cartography.themeable;//Currently not supported
         //cartography.geometryType;//Currently not supported
-        
+
         //FIXME Improve the way to disable metadata requests in the tree
         layerConfig.metadataInfoToolDisabled = true;//Disable the display of the metadata info retrieval button in the tree for this layer
 
@@ -333,8 +336,8 @@ module.controller("GaTreeMapConfigurationController",
       return layerConfig;
     }
 
-    //Checks if the layer configuration complies with the format restrictions, 
-    //having the minimum mandatory attributes defined 
+    //Checks if the layer configuration complies with the format restrictions,
+    //having the minimum mandatory attributes defined
     function checkLayerConfig(layerConfig) {
       if (!layerConfig.wmsUrl || !layerConfig.wmsLayers) {
         return false;
@@ -481,7 +484,7 @@ module.controller("GaTreeMapConfigurationController",
       }
       return id;
     }
-    
+
     //Unique topic id
     var uniqueId = 1;
 
@@ -539,12 +542,12 @@ module.controller("GaTreeMapConfigurationController",
                 layerName = baseLayerName;
                 if (treeNode) {
                   //Recursive hierarchy retrieval treeNode.name should be a unique id
-                  treeNodeParserRec(treeNode, treeId, 0, catalogNodes, tempLayersConfiguration, 
+                  treeNodeParserRec(treeNode, treeId, 0, catalogNodes, tempLayersConfiguration,
                                     activatedLayerNames);
                 }
               }
-              
-              if (!angular.equals(tempLayersConfiguration, {})) {   
+
+              if (!angular.equals(tempLayersConfiguration, {})) {
                 //If no layers have been added the topics won't be considered
                 if (catalogNodes && catalogNodes["root"]) {
                     var treeRoot = catalogNodes["root"];
@@ -555,7 +558,7 @@ module.controller("GaTreeMapConfigurationController",
                       }
                     };
                   }
-                }               
+                }
                 if (catalog) {
                     if (catalogsConfiguration == null) {
                     catalogsConfiguration = {};
@@ -604,7 +607,7 @@ module.controller("GaTreeMapConfigurationController",
         var knownId = id;
         if (knownId) {
             var knownId = id.toLowerCase();
-            if ((knownId.indexOf('hybrid') != -1) || 
+            if ((knownId.indexOf('hybrid') != -1) ||
                 (knownId.indexOf('híbrida') != -1) ||
                 (knownId.indexOf('hibrida') != -1)) {
                 return 'hybrid';
@@ -664,11 +667,11 @@ module.controller("GaTreeMapConfigurationController",
                     if (layersConfiguration == null) {
                       layersConfiguration = {};
                     }
-                    layerConfig.serverLayerName = 
+                    layerConfig.serverLayerName =
                       layerName + (layerName?"-":"") + layerConfig.serverLayerName;
                     layersConfiguration[layerConfig.serverLayerName] = layerConfig;
                     //Insert the element in the right order
-                    insertByOrder(baseLayerNames, baseLayerOrders, layerConfig.serverLayerName, 
+                    insertByOrder(baseLayerNames, baseLayerOrders, layerConfig.serverLayerName,
                                   layerConfig.order);
                   }
                 }
@@ -680,10 +683,10 @@ module.controller("GaTreeMapConfigurationController",
                 //Insert the element in the right order
                 insertInOrder(topicsConfiguration.baseGroups, {
                   active: applicationBackground.background.active,//Only one background should be visible
-                                                                  //if more than one are marked as visible 
+                                                                  //if more than one are marked as visible
                                                                   //then the last active one defined will
                                                                   //be the one displayed initially
-                  order: applicationBackground.order,//Will be ignored by the tree only for 
+                  order: applicationBackground.order,//Will be ignored by the tree only for
                                                      //generating the correct structure purposes
                   //FIXME If a map generic base layer/layer group selector is defined use that value
                   id: applicationBackground.background.name,
@@ -728,7 +731,7 @@ module.controller("GaTreeMapConfigurationController",
                 if (situationMapLayersConfiguration == null) {
                   situationMapLayersConfiguration = [];
                 }
-                layerConfig.serverLayerName = 
+                layerConfig.serverLayerName =
                   layerName + (layerName?"-":"") + layerConfig.serverLayerName;
                 insertInOrder(situationMapLayersConfiguration, layerConfig);
               }
@@ -797,7 +800,7 @@ module.controller("GaTreeMapConfigurationController",
       return optionsConfiguration;
     }
 
-    //Loads the new trees configuration 
+    //Loads the new trees configuration
     $rootScope.loadTreesConfiguration = function(trees) {
         if (trees) {
             if (typeof trees == "string") {
@@ -807,18 +810,18 @@ module.controller("GaTreeMapConfigurationController",
             if (configuration.layersConfiguration != null) {
               gaLayers.loadTreeLayersConfiguration(configuration.layersConfiguration)
                 .then(function(layers){
-                  gaTopic.loadTopicsConfiguration(configuration.topicsConfiguration, 
+                  gaTopic.loadTopicsConfiguration(configuration.topicsConfiguration,
                       configuration.catalogsConfiguration);
-                      if (configuration.topicsConfiguration && configuration.topicsConfiguration.topics && 
+                      if (configuration.topicsConfiguration && configuration.topicsConfiguration.topics &&
                           configuration.topicsConfiguration.topics.length) {
                         //There are trees defined
                         showTreeComponent();
                       }
               });
             } else {
-                gaTopic.loadTopicsConfiguration(configuration.topicsConfiguration, 
+                gaTopic.loadTopicsConfiguration(configuration.topicsConfiguration,
                   configuration.catalogsConfiguration);
-                  if (configuration.topicsConfiguration && configuration.topicsConfiguration.topics && 
+                  if (configuration.topicsConfiguration && configuration.topicsConfiguration.topics &&
                       configuration.topicsConfiguration.topics.length) {
                     //There are trees defined
                     showTreeComponent();
@@ -827,7 +830,7 @@ module.controller("GaTreeMapConfigurationController",
         }
     }
 
-    //Loads the new situation map configuration 
+    //Loads the new situation map configuration
     $rootScope.loadSituationMapConfiguration = function(situationMap) {
         if (situationMap) {
             if (typeof situationMap == "string") {
@@ -839,7 +842,7 @@ module.controller("GaTreeMapConfigurationController",
         }
     }
 
-    //Loads the new backgrounds configuration 
+    //Loads the new backgrounds configuration
     $rootScope.loadBackgroundsConfiguration = function(backgrounds) {
         if (backgrounds) {
             if (typeof backgrounds == "string") {
@@ -858,7 +861,7 @@ module.controller("GaTreeMapConfigurationController",
         }
     }
 
-    //Loads the new application configuration 
+    //Loads the new application configuration
     $rootScope.loadApplicationConfiguration = function(applicationConfiguration) {
         if (applicationConfiguration) {
             if (typeof applicationConfiguration == "string") {
@@ -1003,7 +1006,7 @@ module.controller("GaTreeMapConfigurationController",
         if (properties && properties.bodId) {
           layer = gaLayers.getLayer(properties.bodId);
           if (layer) {
-            //modify the layer.id/layer.serverName in order to make it unique to be able 
+            //modify the layer.id/layer.serverName in order to make it unique to be able
             //to modify/remove the corresponding layer from the map
             layer = parseGeoAdminLayer(layer);
             var mapLayer = params[0];
@@ -1031,7 +1034,7 @@ module.controller("GaTreeMapConfigurationController",
         if (properties && properties.bodId) {
           var id = properties.bodId;
           if (properties.duplicateId) {
-            id = properties.duplicateId;            
+            id = properties.duplicateId;
           } else {
             id = properties.bodId;
           }
@@ -1099,28 +1102,28 @@ module.controller("GaTreeMapConfigurationController",
       }
     });
 
-    //Listen to the directive's tree configuration attribute changes and loads the new configuration 
+    //Listen to the directive's tree configuration attribute changes and loads the new configuration
     $rootScope.$on('gaTreeConfigurationChanged', function(event, params) {
       if (params) {
         $rootScope.loadTreesConfiguration(params);
       }
     });
 
-    //Listen to the directive's situation map configuration attribute changes and loads the new configuration 
+    //Listen to the directive's situation map configuration attribute changes and loads the new configuration
     $rootScope.$on('gaSituationMapConfigurationChanged', function(event, params) {
       if (params) {
         $rootScope.loadSituationMapConfiguration(params);
       }
     });
 
-    //Listen to the directive's backgrounds configuration attribute changes and loads the new configuration 
+    //Listen to the directive's backgrounds configuration attribute changes and loads the new configuration
     $rootScope.$on('gaBackgroundsConfigurationChanged', function(event, params) {
       if (params) {
         $rootScope.loadBackgroundsConfiguration(params);
       }
     });
 
-    //Listen to the directive's application configuration attribute changes and loads the new configuration 
+    //Listen to the directive's application configuration attribute changes and loads the new configuration
     $rootScope.$on('gaApplicationConfigurationChanged', function(event, params) {
       if (params) {
         $rootScope.loadApplicationConfiguration(params);
