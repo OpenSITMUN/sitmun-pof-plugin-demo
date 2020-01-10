@@ -1,20 +1,12 @@
 plugins {
-    id 'org.springframework.boot' version '1.5.8.RELEASE'
     id 'org.sonarqube' version '2.6'
     id 'org.ajoberstar.grgit' version '2.2.0'
     id "com.moowork.node" version "1.2.0"
 }
 
-apply plugin: 'java'
-def targetJavaVersion = JavaVersion.VERSION_1_8;
-sourceCompatibility = "${targetJavaVersion}"
-targetCompatibility = "${targetJavaVersion}"
-
+apply plugin: 'base' // Requirede by the clean task if no other plugin that extends it exists (e.g. the Java plugin)
 apply plugin: 'idea'
-apply plugin: 'maven-publish'
 apply plugin: 'com.moowork.node'
-apply plugin: 'org.springframework.boot'
-apply plugin: 'io.spring.dependency-management'
 apply plugin: 'jacoco'
 
 group = 'org.sitmun'
@@ -29,57 +21,27 @@ repositories {
     mavenCentral()
 }
 
-bootRepackage {
-    enabled = false
-}
+//bootRepackage {
+//    enabled = false
+//}
 
 // Dependencies to other SITMUN plugins must declared all here to facilitate using them
 // in different places of this script
 ext {    
-    sitmunlibs = [:]
-    sitmunlibs.sitmuncore = [
-      gitrepo   : 'https://github.com/sitmun/sitmun-plugin-core.git',
-      groupId   : 'org.sitmun',
-      artifactId: 'sitmun-plugin-core',
-      version   : 'master'
-    ]
-}
-
-dependencies {    
-    sitmunlibs.each { k,v -> implementation "${v.groupId}:${v.artifactId}:${v.version}" }
-
-    implementation "org.webjars:webjars-locator"
-    implementation "org.webjars:bootstrap:${bootstrap_version}"
-    implementation "org.webjars:requirejs:${requirejs_version}"
-
-    testImplementation 'com.h2database:h2'
-    testImplementation 'org.springframework.boot:spring-boot-starter-test'
-}
-
-task checkJavaVersion {
-  description = 'Checking java version.'
-    if (!JavaVersion.current().equals(targetJavaVersion)) {
-        String message = """
-ERROR: Java ${targetJavaVersion} JDK required but ${JavaVersion.current()} found. 
-SOLUTION: 
-  a) Point JAVA_HOME to a ${targetJavaVersion} JDK and then run gradle, or
-  b) Run ./gradlew -Dorg.gradle.java.home=/path_to_jdk_${targetJavaVersion}_directory"""
-        throw new GradleException(message)
-    }
-}
-
-compileJava.dependsOn checkJavaVersion
-
-publishing {
-    publications {
-        mavenJava(MavenPublication) {
-            groupId group
-            artifactId 'sitmun-plugin-demo'
-            version version
-
-            from components.java
-        }
-    }
+    // Node modules
+      sitmunmodules = [:]
+      sitmunmodules.sitmunfrontendcore = [
+        gitrepo : 'https://github.com/sitmun/sitmun-frontend-core.git',
+        groupId : 'org.sitmun',
+        artifactId : 'sitmun-frontend-core',
+        version : 'master'
+      ]
+      sitmunmodules.sitmunfrontendgui = [
+              gitrepo : 'https://github.com/sitmun/sitmun-frontend-gui.git',
+              groupId : 'org.sitmun',
+              artifactId : 'sitmun-frontend-gui',
+              version : 'master'
+            ]
 }
 
 sonarqube {
@@ -89,23 +51,20 @@ sonarqube {
         // I assume the default source folder is src/main/java because of the java plugin
         // If that folder does not exist, adding another source (the else) does not work
         // properly
-        if (properties['sonar.sources'] == null)
-            properties['sonar.sources'] = 'src/main/angular-library'
-        else
-            properties['sonar.sources'] += 'src/main/angular-library'
+        properties["sonar.sources"] = 'src'
         // Excluding some code which, at least most if it, is a library that probably should not have been included as code
         property "sonar.exclusions", "src/main/angular-library/projects/sitmun-plugin-demo/src/lib/**/*"
     }    
 }
 
 
-sourceSets {
+/*sourceSets {
   main {
     resources {
       srcDirs = ["$projectDir/dist", "$projectDir/src/main/resources"]
     }
   }
-}
+}*/
 
 def cloneDir = file("$buildDir/plugins-src")
 
@@ -115,7 +74,7 @@ task clonePlugins {
     if (!cloneDir.exists()) {
       mkdir cloneDir
     }
-    sitmunlibs.each { k, v ->
+    sitmunmodules.each { k, v ->
       def targetDir = file("$cloneDir/${v.artifactId}")
       if (!targetDir.exists()) {
         grgit.clone {
@@ -133,9 +92,9 @@ clonePlugins.mustRunAfter clean
 task installPlugins(dependsOn: clonePlugins) {
   description = 'Install Plugins.'
   doLast {
-    // It creates a temporary GradleBuild task for each sitmun dependency in sitmunlibs
+    // It creates a temporary GradleBuild task for each sitmun dependency in sitmunmodules
     // and runs the specified tasks for each
-    sitmunlibs.each { k,v ->
+    sitmunmodules.each { k,v ->
       def targetDir = file("$cloneDir/${v.artifactId}/dist")
       if (!targetDir.exists()) {
         def tempTask = tasks.create(name: "install_module_${v.artifactId}", type: GradleBuild)
@@ -152,7 +111,7 @@ installPlugins.mustRunAfter clonePlugins
 
 task installModules(dependsOn: [installPlugins, npmInstall]) {
   doLast {
-    sitmunlibs.values().each {
+    sitmunmodules.values().each {
       def sourceDir = "$cloneDir/${it.artifactId}/dist" 
       ant.copy(todir: "node_modules") {
         fileset(dir: sourceDir)
@@ -164,8 +123,6 @@ task installModules(dependsOn: [installPlugins, npmInstall]) {
 installModules.mustRunAfter installPlugins
 installModules.mustRunAfter npmInstall
 
-installModules.mustRunAfter installPlugins
-installModules.mustRunAfter npmInstall
 
 task npmBuildSitmunPluginDemo(type: NpmTask, dependsOn: installModules) {
   description = 'Build module sitmun-plugin-demo.'
@@ -174,10 +131,10 @@ task npmBuildSitmunPluginDemo(type: NpmTask, dependsOn: installModules) {
 
 npmBuildSitmunPluginDemo.mustRunAfter installModules
 
-processResources.dependsOn npmBuildSitmunPluginDemo
-processResources.mustRunAfter npmBuildSitmunPluginDemo
+//processResources.dependsOn npmBuildSitmunPluginDemo
+//processResources.mustRunAfter npmBuildSitmunPluginDemo
 
-task install(dependsOn: 'publishToMavenLocal')
+task install(dependsOn: 'npmBuildSitmunPluginDemo')
 
 def cacheDir = project.hasProperty("cacheDir")? project.properties.cacheDir : "${project.buildDir}" 
 
