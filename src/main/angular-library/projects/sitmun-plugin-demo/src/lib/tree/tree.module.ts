@@ -1,10 +1,10 @@
 import {downgradeComponent, downgradeInjectable} from '@angular/upgrade/static';
 import angular from 'angular';
 
-import {MapComponent} from 'sitmun-frontend-gui';
+import {MapComponent} from '@sitmun/frontend-gui';
 
 import {MapConfigurationManagerService,
-  Layer, LayerConfiguration, LayerGroup, OptionalParameter, MapOptionsConfiguration} from 'sitmun-frontend-core';
+  Layer, LayerConfiguration, LayerGroup, OptionalParameter, MapOptionsConfiguration} from '@sitmun/frontend-core';
 
 
 //Angular js imports

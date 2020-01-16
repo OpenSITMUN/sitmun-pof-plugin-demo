@@ -1,13 +1,9 @@
-language: java
-
 jdk:  
   - openjdk8
 
 addons:
   sonarcloud:
     organization: sitmun
-
-#before_install: ./build-scripts/install-dependencies.sh
 
 script: ./build-scripts/script.sh
 

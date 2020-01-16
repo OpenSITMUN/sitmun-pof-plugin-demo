@@ -9,12 +9,12 @@ import { RouterModule, Routes } from '@angular/router';
 import { AppComponent } from './app.component';
 import { environment } from '../environments/environment';
 import { ExternalConfigurationService } from './ExternalConfigurationService';
-import { AngularHalModule } from 'angular-hal';
+import { AngularHalModule } from '@sitmun/frontend-core';
 
 import { HomeComponent } from './home/home.component';
 import {MatSidenavModule} from '@angular/material/sidenav';
 import {SitmunPluginCoreModule,LoginComponent,AccountEditComponent,AccountChangePasswordComponent,
-        MapConfigurationManagerService, 
+        MapConfigurationManagerService,
         Layer, LayerConfiguration, LayerGroup} from 'sitmun-plugin-core';
 
 import * as angular from 'angular';
@@ -33,15 +33,15 @@ var treeModule = angular.
   directive(AppComponent.ngSelector, downgradeComponent({
     component: AppComponent,
   }));
-    
+
 const appRoutes: Routes = [
-  { 
+  {
     path: '',
-    component: HomeComponent 
-  }, { 
-    path: '**', 
-    redirectTo: '', 
-    pathMatch: 'full' 
+    component: HomeComponent
+  }, {
+    path: '**',
+    redirectTo: '',
+    pathMatch: 'full'
   }
 ];
 
@@ -52,8 +52,8 @@ const appRoutes: Routes = [
     HomeComponent
   ],
   imports: [
-    BrowserModule, 
-    SitmunPluginCoreModule.forRoot(),  
+    BrowserModule,
+    SitmunPluginCoreModule.forRoot(),
     MatSidenavModule,
     //Upgrade module import for angularjs modules
     UpgradeModule,
@@ -72,11 +72,11 @@ const appRoutes: Routes = [
 })
 
 //Upgrade configuration to be able to use and communicate with angularjs modules
-export class AppModule { 
+export class AppModule {
   constructor(private upgrade: UpgradeModule, private router:RouterModule ) { }
   ngDoBootstrap() {
     //
-    this.upgrade.bootstrap(document.body, 
+    this.upgrade.bootstrap(document.body,
       [treeModule.name]);
     //Notify the url changes to the Router
     setUpLocationSync(this.upgrade);

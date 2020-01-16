@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Observable} from 'rxjs';
-import { ResourceHelper, Resource } from 'angular-hal';
+import { ResourceHelper, Resource } from '@sitmun/frontend-core';
 import { JsonPipe } from '@angular/common';
 import {TranslateService, LangChangeEvent} from '@ngx-translate/core';
 
@@ -8,7 +8,7 @@ import {Application, ApplicationService, Tree, TreeService,
         CartographyGroup, CartographyGroupService, ApplicationParameterService,
         ApplicationBackgroundService, ApplicationParameter, ApplicationBackground,
         Background, Cartography, Service, Role, Connection, TreeNode, ServiceParameter,
-        TaskAvailability, TaskAvailabilityService, CartographyAvailability, CartographyAvailabilityService, 
+        TaskAvailability, TaskAvailabilityService, CartographyAvailability, CartographyAvailabilityService,
         TaskService, Task, MapConfigurationManagerService, Layer, LayerGroup, MapOptionsConfiguration,
         OptionalParameter, MapComponentStatus, GEOADMIN_TREE_TASK_ID} from 'sitmun-plugin-core';
 
@@ -20,7 +20,7 @@ export class ApplicationConfiguration {
   treeAutoRefresh: Boolean;
   parameters: ApplicationParameter[];
 }
-        
+
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
@@ -36,10 +36,10 @@ export class HomeComponent implements OnInit {
 
   //Default attribution
   defaultAttribution:string = "© Institut Cartogràfíc i Geològic de Catalunya";
-  
+
   //Store the app language configuration changes and notify the angularjs module with a directive attribute
-  languageConfiguration:string;     	
-  
+  languageConfiguration:string;
+
   constructor(private treeService: TreeService,
     private applicationService: ApplicationService,
     private cartographyGroupService: CartographyGroupService,
@@ -74,7 +74,7 @@ export class HomeComponent implements OnInit {
   //Unique topic id used in tree parsing
   uniqueId:number = 1;
   initializeDefaultValues() {
-    this.uniqueId = 1;  
+    this.uniqueId = 1;
   }
 
   //Parse the ServiceParameter object to obtain its linked objects information
@@ -86,7 +86,7 @@ export class HomeComponent implements OnInit {
           service.parameters = parameters;
         }, error => {
           service.parameters = null;
-          console.log(`Could not retrieve parameters information information for service '${this_.getElementId(service)}'`);              
+          console.log(`Could not retrieve parameters information information for service '${this_.getElementId(service)}'`);
         },
         () => {
           if (onComplete && (typeof onComplete  == 'function')) {
@@ -108,11 +108,11 @@ export class HomeComponent implements OnInit {
 
         //Check availability against availableCartographies
         var memberId = this.getElementId(member);
-        if ((member._links != null) && (member._links != undefined) && 
+        if ((member._links != null) && (member._links != undefined) &&
             (member._links['service'] != null) && (member._links['service'] != undefined)) {
           //The cartography service information is already available
         } else {
-          if ((memberId != "") && this.availableCartographies && this.availableCartographies[memberId] && 
+          if ((memberId != "") && this.availableCartographies && this.availableCartographies[memberId] &&
               this.availableCartographies[memberId]._links) {
             if (!member._links) {
               member._links = {};
@@ -125,7 +125,7 @@ export class HomeComponent implements OnInit {
         member.getRelation(Service, 'service').finally(
           function() {
             //Retrieve service params information first
-            this_.resolveServiceParameters(member.service, 
+            this_.resolveServiceParameters(member.service,
               function(){
                 this_.resolveServiceRelations(elements, index+1, onComplete)
               });
@@ -136,7 +136,7 @@ export class HomeComponent implements OnInit {
           },
           error => {
             member.service = null;
-            console.log(`Could not retrieve Service information for member '${this_.getElementId(member)}'`);          
+            console.log(`Could not retrieve Service information for member '${this_.getElementId(member)}'`);
           },
           () => {
             //onComplete
@@ -173,7 +173,7 @@ export class HomeComponent implements OnInit {
               },
               error => {
                 group.members = new Array<Cartography>()
-                console.log(`Could not retrieve Cartography information for cartographyGroup with id '${groupId}'`);          
+                console.log(`Could not retrieve Cartography information for cartographyGroup with id '${groupId}'`);
               },
             () => {
               //onComplete
@@ -203,10 +203,10 @@ export class HomeComponent implements OnInit {
       ).subscribe(
         (cartography:Cartography) => {
           treeNode.cartography = cartography;
-        }, 
+        },
         error => {
           treeNode.cartography = null;
-          console.log(`Could not retrieve TreeNode cartography information for tree node with id '${this_.getElementId(treeNode)}'`);          
+          console.log(`Could not retrieve TreeNode cartography information for tree node with id '${this_.getElementId(treeNode)}'`);
         },
         () => {
           //onComplete
@@ -235,7 +235,7 @@ export class HomeComponent implements OnInit {
           },
           error => {
             treeNode.parent = null;
-            console.log(`Could not retrieve TreeNode parent information for tree node with id '${this_.getElementId(treeNode)}'`);          
+            console.log(`Could not retrieve TreeNode parent information for tree node with id '${this_.getElementId(treeNode)}'`);
           },
           () => {
             //onComplete
@@ -248,7 +248,7 @@ export class HomeComponent implements OnInit {
       }
     }
   }
-  
+
   //Parse the TreeNode Array to obtain its linked objects information
   resolveTreeNodes(treeNodes: TreeNode[], index, onComplete?, componentReference?) {
     if (treeNodes) {
@@ -278,7 +278,7 @@ export class HomeComponent implements OnInit {
         tree.getRelationArray(TreeNode, 'nodes').finally(
           function() {
             //triggered whether finished gracefully or not
-            this_.resolveTreeNodes(tree.nodes, 0, 
+            this_.resolveTreeNodes(tree.nodes, 0,
               function() {
                 this_.resolveTrees(trees, index+1, onComplete);
               }, this_);
@@ -288,7 +288,7 @@ export class HomeComponent implements OnInit {
           },
           error => {
             tree.nodes = null;
-            console.log(`Could not retrieve TreeNode nodes information for tree with id '${this_.getElementId(tree)}'`);          
+            console.log(`Could not retrieve TreeNode nodes information for tree with id '${this_.getElementId(tree)}'`);
           },
           () => {
             //onComplete
@@ -320,7 +320,7 @@ export class HomeComponent implements OnInit {
         },
         error => {
           background.cartographyGroup = null;
-          console.log(`Could not retrieve CartographyGroup information for Background with id '${this_.getElementId(background)}'`);          
+          console.log(`Could not retrieve CartographyGroup information for Background with id '${this_.getElementId(background)}'`);
         },
         () => {
           //onComplete
@@ -331,7 +331,7 @@ export class HomeComponent implements OnInit {
         onComplete();
       }
     }
-  } 
+  }
 
   //Parse the ApplicationBackground  array to obtain its linked objects information
   resolveApplicationBackgrounds(backgrounds: ApplicationBackground[], index:number, onComplete?) {
@@ -342,7 +342,7 @@ export class HomeComponent implements OnInit {
         applicationBackground.getRelation(Background, "background").finally(
           function() {
             //triggered whether finished gracefully or not
-            this_.resolveBackgroundCartographyGroup(applicationBackground.background, 
+            this_.resolveBackgroundCartographyGroup(applicationBackground.background,
               function() {
                 this_.resolveApplicationBackgrounds(backgrounds, index+1, onComplete);
               });
@@ -352,7 +352,7 @@ export class HomeComponent implements OnInit {
           },
           error => {
             applicationBackground.background = null;
-            console.log(`Could not retrieve Background information for ApplicationBackground with id '${this_.getElementId(applicationBackground)}'`);          
+            console.log(`Could not retrieve Background information for ApplicationBackground with id '${this_.getElementId(applicationBackground)}'`);
           },
           () => {
             //On complete
@@ -571,7 +571,7 @@ export class HomeComponent implements OnInit {
     }
     if (layerConfiguration.url_exception != undefined) {
       layer.url_exception = layerConfiguration.url_exception;
-    }      
+    }
     if (layerConfiguration.url_bgcolor != undefined) {
       layer.url_bgcolor = layerConfiguration.url_bgcolor;
     }
@@ -627,7 +627,7 @@ export class HomeComponent implements OnInit {
       if ((cartography.transparency != undefined) && (cartography.transparency != null)) {
           layerConfig.opacity = Math.abs(1 - cartography.transparency/100);
       }
-      layerConfig.queryable = cartography.queryable;//Currently not supported 
+      layerConfig.queryable = cartography.queryable;//Currently not supported
       //cartography.queryAct;//Currently not supported
       //cartography.queryLay;//Currently not supported
 
@@ -647,7 +647,7 @@ export class HomeComponent implements OnInit {
         } else {
           layerConfig.singleTile = true;
         }
-        layerConfig.wmsUrl = cartography.service.url;                      
+        layerConfig.wmsUrl = cartography.service.url;
         cartography.service.projections;//Currently not supported
         if (cartography.service.legend) {
           layerConfig.hasLegend = true;
@@ -655,7 +655,7 @@ export class HomeComponent implements OnInit {
         } else {
           layerConfig.hasLegend = false;
         }
-                  
+
         layerConfig.infoUrl = cartography.service.infoUrl;
         layerConfig.projections = cartography.service.projections;
         //cartography.service.connection;//Currently not supported
@@ -668,7 +668,7 @@ export class HomeComponent implements OnInit {
             if (parameter.name) {
               parameterName = parameter.name.toLowerCase();
               switch(parameterName) {
-                case 'transparent': 
+                case 'transparent':
                                     layerConfig.url_transparent = parameter.value;
                                     break;
                 case 'exception':
@@ -697,7 +697,7 @@ export class HomeComponent implements OnInit {
                                     layerConfig.tileSize = parameter.value;
                                     break;
                 case 'extent':
-                                    if ((parameter.value.indexOf("[") != -1) && 
+                                    if ((parameter.value.indexOf("[") != -1) &&
                                         (parameter.value.indexOf("]") != -1)) {
                                       layerConfig.extent = JSON.parse(parameter.value);
                                     }
@@ -749,7 +749,7 @@ export class HomeComponent implements OnInit {
       //Asign the tree node label value to be
       layerConfig.label = cartography.name;
 
-      //Define an attribution 
+      //Define an attribution
       if (!layerConfig.attribution) {
           //Get the default attribution
           layerConfig.attribution = this.getDefaultAttribution();//"";
@@ -769,7 +769,7 @@ export class HomeComponent implements OnInit {
       layerConfig.highlightable = false;
       layerConfig.chargeable = false;
       layerConfig.searchable = false;
-      
+
       layerConfig.timeEnabled = false;
       layerConfig.tooltip = true; //Tooltip enabled (geoadmin tree module configuration attribute)
       layerConfig.topics = topics;//Topic id array that this layer is related to (geoadmin tree module configuration attribute)
@@ -796,7 +796,7 @@ export class HomeComponent implements OnInit {
       layerConfig.metadataUrl = cartography.metadataUrl;
       //cartography.themeable;//Currently not supported
       //cartography.geometryType;//Currently not supported
-      
+
       //TODO FIXME use a better way to disable metadata requests on the tree
       layerConfig.metadataInfoToolDisabled = true;//Disable the display of the metadata info retrieval button in the tree for this layer
 
@@ -808,8 +808,8 @@ export class HomeComponent implements OnInit {
     return layerConfig;
   }
 
-  //Checks if the layer configuration complies with the format restrictions, 
-  //having the minimum mandatory attributes defined 
+  //Checks if the layer configuration complies with the format restrictions,
+  //having the minimum mandatory attributes defined
   checkLayerConfig(layerConfig) {
     if (!layerConfig.wmsUrl || !layerConfig.wmsLayers) {
       return false;
@@ -844,7 +844,7 @@ export class HomeComponent implements OnInit {
               if (situationMapLayersConfiguration == null) {
                 situationMapLayersConfiguration = [];
               }
-              layerConfig.serverLayerName = 
+              layerConfig.serverLayerName =
                 layerName + (layerName?"-":"") + layerConfig.serverLayerName;
               this.insertInOrder(situationMapLayersConfiguration, layerConfig);
             }
@@ -993,12 +993,12 @@ export class HomeComponent implements OnInit {
               layerName = baseLayerName;
               if (treeNode) {
                 //Recursive hierarchy retrieval treeNode.name should be a unique id
-                this.treeNodeParserRec(treeNode, treeId, 0, catalogNodes, tempLayersConfiguration, 
+                this.treeNodeParserRec(treeNode, treeId, 0, catalogNodes, tempLayersConfiguration,
                                   activatedLayerNames);
               }
             }
-            
-            //if (!angular.equals(tempLayersConfiguration, {})) {   
+
+            //if (!angular.equals(tempLayersConfiguration, {})) {
             if (tempLayersConfiguration && (Object.getOwnPropertyNames(tempLayersConfiguration).length > 0)) {
               //If no layers have been added the topics won't be considered
               if (catalogNodes && catalogNodes["root"]) {
@@ -1010,7 +1010,7 @@ export class HomeComponent implements OnInit {
                     }
                   };
                 }
-              }               
+              }
               if (catalog) {
                   if (catalogsConfiguration == null) {
                   catalogsConfiguration = {};
@@ -1038,7 +1038,7 @@ export class HomeComponent implements OnInit {
               //angular.extend(layersConfiguration, tempLayersConfiguration)
               //Update the layers configuration object
               for (var pName in tempLayersConfiguration) {
-                layersConfiguration[pName] = 
+                layersConfiguration[pName] =
                   tempLayersConfiguration[pName];
               }
             }
@@ -1071,7 +1071,7 @@ export class HomeComponent implements OnInit {
       }
     }
     //Set the activated layers visibility
-    if (parsedConfiguration.topicsConfiguration && 
+    if (parsedConfiguration.topicsConfiguration &&
         parsedConfiguration.topicsConfiguration.topics &&
         parsedConfiguration.topicsConfiguration.topics.length) {
       var activatedLayers = parsedConfiguration.topicsConfiguration.topics[0]["activatedLayers"];
@@ -1081,7 +1081,7 @@ export class HomeComponent implements OnInit {
         })
       }
     }
-    
+
     return layers;
   }
 
@@ -1133,11 +1133,11 @@ export class HomeComponent implements OnInit {
                   if (layersConfiguration == null) {
                     layersConfiguration = {};
                   }
-                  layerConfig.serverLayerName = 
+                  layerConfig.serverLayerName =
                     layerName + (layerName?"-":"") + layerConfig.serverLayerName;
                   layersConfiguration[layerConfig.serverLayerName] = layerConfig;
                   //Insert the element in the right order
-                  this.insertByOrder(baseLayerNames, baseLayerOrders, layerConfig.serverLayerName, 
+                  this.insertByOrder(baseLayerNames, baseLayerOrders, layerConfig.serverLayerName,
                                 layerConfig.order);
                 }
               }
@@ -1149,10 +1149,10 @@ export class HomeComponent implements OnInit {
               //Insert the element in the right order
               this.insertInOrder(topicsConfiguration.baseGroups, {
                 active: applicationBackground.background.active,//Only one background should be visible
-                                                                //if more than one are marked as visible 
+                                                                //if more than one are marked as visible
                                                                 //then the last active one defined will
                                                                 //be the one displayed initially
-                order: applicationBackground.order,//Will be ignored by the tree only for 
+                order: applicationBackground.order,//Will be ignored by the tree only for
                                                    //generating the correct structure purposes
                   //TODO FIX CHANGE WHEN A MAP GENERIC BASE LAYER/LAYER GROUP SELECTOR IS DEFINED
                 id: applicationBackground.background.name,
@@ -1176,8 +1176,8 @@ export class HomeComponent implements OnInit {
 
     var configuration = this.parseBackgroundsConfiguration(backgrounds);
 
-    if ((configuration != null) && (configuration.layersConfiguration != null) && 
-        (configuration.topicsConfiguration != null) && 
+    if ((configuration != null) && (configuration.layersConfiguration != null) &&
+        (configuration.topicsConfiguration != null) &&
         (configuration.topicsConfiguration.baseGroups != null)) {
       var groupsConfiguration = configuration.topicsConfiguration.baseGroups;
       var layersConfiguration = configuration.layersConfiguration;
@@ -1296,7 +1296,7 @@ export class HomeComponent implements OnInit {
     this.application.getRelationArray(ApplicationBackground, 'backgrounds').subscribe(
       (applicationBackgrounds: ApplicationBackground[]) => {
       this.application.backgrounds = applicationBackgrounds;
-      this.resolveApplicationBackgrounds(this.application.backgrounds, 0, 
+      this.resolveApplicationBackgrounds(this.application.backgrounds, 0,
         function() {
           //On complete
           this_.updateApplicationBackgroundsConfiguration(this_.application?this_.application.backgrounds:null);
@@ -1304,7 +1304,7 @@ export class HomeComponent implements OnInit {
     },
       error => this.application.backgrounds= new Array<ApplicationBackground>());
     this.application.getRelation(CartographyGroup, 'situationMap').subscribe(
-            (situationMap: CartographyGroup) => 
+            (situationMap: CartographyGroup) =>
             {
                 this.application.situationMap = situationMap;
                 this.resolveCartographyGroup(this.application.situationMap,
@@ -1351,7 +1351,7 @@ export class HomeComponent implements OnInit {
             this.availableCartographies[this.getElementId(cartography)] = cartography;
           },
           error => {
-            console.log(`Could not retrieve Cartography information for cartographyAvailavility with id '${this_.getElementId(cartographyAvailability)}'`);          
+            console.log(`Could not retrieve Cartography information for cartographyAvailavility with id '${this_.getElementId(cartographyAvailability)}'`);
           },
           () => {
             //On complete
@@ -1393,7 +1393,7 @@ export class HomeComponent implements OnInit {
             }
           },
           error => {
-            console.log(`Could not retrieve Task information for TaskAvailavility with id '${this_.getElementId(taskAvailability)}'`);          
+            console.log(`Could not retrieve Task information for TaskAvailavility with id '${this_.getElementId(taskAvailability)}'`);
           },
           () => {
             //On complete
@@ -1447,7 +1447,7 @@ export class HomeComponent implements OnInit {
         (error:any) => {
           console.log("Error getting MapComponent status");
         }
-      );     
+      );
   }
 
   treeComponentEnabled:boolean  = false;
@@ -1457,7 +1457,7 @@ export class HomeComponent implements OnInit {
 
   //TODO FIXME use a better way
   isTreeComponentTask(task:Task):boolean {
-    return (task && task.name && 
+    return (task && task.name &&
         (task.name.toLowerCase().indexOf(GEOADMIN_TREE_TASK_ID) != -1));
   }
 
@@ -1480,7 +1480,7 @@ export class HomeComponent implements OnInit {
       }
     };
     defaultTree.nodes = [];
-    
+
     var node = new TreeNode();
     node.name = "Transporte";
     node.tooltip = "Transporte";
@@ -1543,7 +1543,7 @@ export class HomeComponent implements OnInit {
             "connection": {
               "href": "http://ginebra.internal.geoslab.com:8088/api/cartographies/207/connection"
             }
-          }; 
+          };
     var service = new Service();
     service.name = "Service IDEE Transportes";
     service.url = "http://servicios.idee.es/wms-inspire/transportes";
@@ -1569,7 +1569,7 @@ export class HomeComponent implements OnInit {
           "href": "http://ginebra.internal.geoslab.com:8088/api/services/204/connection"
         }
       };
-      
+
     var parameters = [];
     var parameter = new ServiceParameter();
     parameter.name = "version";
@@ -1587,7 +1587,7 @@ export class HomeComponent implements OnInit {
         }
       };
     parameters.push(parameter);
-    
+
     parameter = new ServiceParameter();
     parameter.name = "format";
     parameter.value = "png";
@@ -1686,7 +1686,7 @@ export class HomeComponent implements OnInit {
     };
     service["layers"] = null;
     service["connection"] = null;
-      
+
     var parameters = [];
     var parameter = new ServiceParameter();
     parameter.name = "version";
@@ -1704,7 +1704,7 @@ export class HomeComponent implements OnInit {
         }
       };
     parameters.push(parameter);
-    
+
     parameter = new ServiceParameter();
     parameter.name = "format";
     parameter.value = "png";
@@ -1890,7 +1890,7 @@ export class HomeComponent implements OnInit {
     cartographyGroup["members"] = [];
 
     var cartography = new Cartography();
-    
+
     cartography["name"] = "Base Mapa - imgmapa_et";
     cartography["type"] = null;
     cartography["visible"] = true;
@@ -1959,7 +1959,7 @@ export class HomeComponent implements OnInit {
     };
     service["layers"] = null;
     service["connection"] = null;
-      
+
     var parameters = [];
     var parameter = new ServiceParameter();
     parameter.name = "version";
@@ -1977,7 +1977,7 @@ export class HomeComponent implements OnInit {
         }
       };
     parameters.push(parameter);
-    
+
     parameter = new ServiceParameter();
     parameter.name = "format";
     parameter.value = "png";
@@ -2487,9 +2487,9 @@ export class HomeComponent implements OnInit {
   cartography.availabilities = null;
   cartography.selectionService = null;
   cartography.connection = null;
-      
+
   cartographyGroup["members"].push(cartography);
-  
+
   cartography = new Cartography();
   cartography["name"] = "Base Aerial - imgeix";
   cartography["type"] = null;
@@ -2590,12 +2590,12 @@ export class HomeComponent implements OnInit {
       4686464 //yMax
     ].join() + "]";
     options["parameters"].push(parameter);
-    
+
     parameter = new ApplicationParameter();
     parameter.name = "tileWidth";
     parameter.value = "256";
     options["parameters"].push(parameter);
-    
+
     parameter = new ApplicationParameter();
     parameter.name = "tileHeight";
     parameter.value = "256";
@@ -2609,11 +2609,11 @@ export class HomeComponent implements OnInit {
   loadMapComponentDefaults:boolean = false;
   //Public values (to be loaded if the user is not logged in)
   loadDefaultApplicationConfiguration() {
-    
+
     this.updateApplicationConfiguration(this.getDefaultApplicationConfiguration());
     this.updateTreesConfiguration(this.getDefaultTreesConfiguration());
 
-    //Load default situation map configuration clone of currently visible baselayer group 
+    //Load default situation map configuration clone of currently visible baselayer group
     //this.treeSituationMapConfiguration = null;
     this.updateSituationMapConfiguration(this.getDefaultSituationMapConfiguration());
     //Load default cartography configuration values harcoded in the map component

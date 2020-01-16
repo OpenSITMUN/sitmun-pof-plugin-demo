@@ -112,7 +112,7 @@ installModules.mustRunAfter installPlugins
 installModules.mustRunAfter npmInstall
 
 
-task npmBuildSitmunPluginDemo(type: NpmTask, dependsOn: installModules) {
+task npmBuildSitmunPluginDemo(type: NpmTask, dependsOn: npmInstall) {
   description = 'Build module sitmun-plugin-demo.'
   args = ['run-script', 'build-sitmun-plugin-demo']
 }

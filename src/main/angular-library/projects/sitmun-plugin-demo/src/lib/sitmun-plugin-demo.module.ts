@@ -3,11 +3,11 @@ import { NgModule, ModuleWithProviders } from '@angular/core';
 //Hybrid app imports
 import { UpgradeModule, setAngularJSGlobal } from '@angular/upgrade/static';
 
-import {SitmunFrontendGuiModule,LoginComponent,AccountEditComponent,AccountChangePasswordComponent} from 'sitmun-frontend-gui';
+import {SitmunFrontendGuiModule,LoginComponent,AccountEditComponent,AccountChangePasswordComponent} from '@sitmun/frontend-gui';
 
 import {SitmunFrontendCoreModule,
   MapConfigurationManagerService,
-  Layer, LayerConfiguration, LayerGroup} from 'sitmun-frontend-core';
+  Layer, LayerConfiguration, LayerGroup} from '@sitmun/frontend-core';
 
 import * as angular from 'angular';
 
