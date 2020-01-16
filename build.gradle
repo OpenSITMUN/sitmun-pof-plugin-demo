@@ -30,18 +30,6 @@ repositories {
 ext {    
     // Node modules
       sitmunmodules = [:]
-      sitmunmodules.sitmunfrontendcore = [
-        gitrepo : 'https://github.com/sitmun/sitmun-frontend-core.git',
-        groupId : 'org.sitmun',
-        artifactId : 'sitmun-frontend-core',
-        version : 'master'
-      ]
-      sitmunmodules.sitmunfrontendgui = [
-              gitrepo : 'https://github.com/sitmun/sitmun-frontend-gui.git',
-              groupId : 'org.sitmun',
-              artifactId : 'sitmun-frontend-gui',
-              version : 'master'
-            ]
 }
 
 sonarqube {

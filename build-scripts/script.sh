@@ -3,6 +3,8 @@ echo
 echo "Building script ..."
 echo
 
+npm set //npm.pkg.github.com/:_authToken $GITHUB_API_KEY
+
 cd $TRAVIS_BUILD_DIR
 if ./gradlew clean assemble check --info --stacktrace; then
     echo

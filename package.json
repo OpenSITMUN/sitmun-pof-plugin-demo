@@ -41,7 +41,9 @@
     "angular": "~1.7.2",
     "angular-translate": "~2.18.1",
     "angular-translate-loader-static-files": "~2.18.1",
-    "jquery": "~3.4.1"
+    "jquery": "~3.4.1",
+    "@sitmun/frontend-core": "~0.7.3",
+    "@sitmun/frontend-gui": "~0.7.0"
   },
   "devDependencies": {
     "@angular-devkit/build-angular": "~0.6.3",
